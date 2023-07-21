@@ -96,18 +96,44 @@ export default async function handler(req, res) {
       cardCTX.fillStyle = 'rgba(0, 0, 0, 0.5)';
       cardCTX.fillRect(0, 0, 2400, 1200);
 
-      // set font to hoyolab one
-      cardCTX.font = 'bold 75px "Segoe UI"';
       cardCTX.fillStyle = '#ffffff';
 
-      // draw name
+      // draw game name
+      cardCTX.font = 'bold 75px "Segoe UI"';
       cardCTX.fillText(gameConfigData.name, 75, 175);
+
+      // draw level and uid
+      cardCTX.font = '30px "Segoe UI"';
+      cardCTX.fillText(`Level ${hoyolabRecordCard.hoyolabRecordCard.level} - UID ${hoyolabRecordCard.hoyolabRecordCard.game_role_id} [${hoyolabRecordCard.hoyolabRecordCard.region_name}]`, 90, 222);
+
+      // draw extra data stuff; days active, achievements...
+      let extraDataStuffConfig = {
+        titleFont: "50px \"Segoe UI\"",
+        subtitleFont: "30px \"Segoe UI\"",
+        layer1: {
+          titleHeight: 310,
+          subtitleHeight: 360,
+          zeroWidth: 75,
+          oneWidth: 500
+        }
+      }
+
+      // days
+      cardCTX.font = extraDataStuffConfig["titleFont"];
+      cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[0].name, extraDataStuffConfig["layer1"]["zeroWidth"], extraDataStuffConfig["layer1"]["titleHeight"]);
+      cardCTX.font = extraDataStuffConfig["subtitleFont"];
+      cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[0].value} Days`, extraDataStuffConfig["layer1"]["zeroWidth"], extraDataStuffConfig["layer1"]["subtitleHeight"]);
+
+      // characters
+      cardCTX.font = extraDataStuffConfig["titleFont"];
+      cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[1].name, extraDataStuffConfig["layer1"]["oneWidth"], extraDataStuffConfig["layer1"]["titleHeight"]);
+      cardCTX.font = extraDataStuffConfig["subtitleFont"];
+      cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[1].value} ${hoyolabRecordCard.hoyolabRecordCard.data[1].name.includes(" ") ? hoyolabRecordCard.hoyolabRecordCard.data[1].name.split(" ")[0] : hoyolabRecordCard.hoyolabRecordCard.data[1].name} Unlocked`, extraDataStuffConfig["layer1"]["oneWidth"], extraDataStuffConfig["layer1"]["subtitleHeight"]);
 
       // send to client
       res.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
       res.setHeader('Content-Type', 'image/png');
-      const pngCanvas = await cardCanvas.toBuffer('image/png');
-      return res.status(200).send(pngCanvas);
+      return res.status(200).send(await cardCanvas.toBuffer('image/png'));
     } catch (err) {
       console.log(err);
       return res.status(500).json({ success: false, error: 'Failed to make card' });
