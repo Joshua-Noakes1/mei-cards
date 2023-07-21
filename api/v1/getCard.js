@@ -1,5 +1,8 @@
+
 const getRecordCard = require('../../lib/hoyo/getRecordCard');
-const { createCanvas } = require('@napi-rs/canvas');
+const fs = require('fs');
+const path = require('path');
+const { createCanvas, loadImage } = require('@napi-rs/canvas');
 
 
 export default async function handler(req, res) {
@@ -21,11 +24,12 @@ export default async function handler(req, res) {
 
     try {
       // make canvas
-      const cardCanvas = createCanvas(1200, 600);
+      const cardCanvas = createCanvas(2400, 1200);
       const cardCTX = cardCanvas.getContext('2d');
 
       // load background based on game
-
+      let gameBackground = await loadImage(fs.readFileSync(path.join(__dirname, '../', '../', 'lib', 'hoyo', 'images', `${game}.jpg`)));
+      cardCTX.drawImage(gameBackground, 0, 0, 2400, 1200);
 
       // ctx.lineWidth = 10
       // ctx.strokeStyle = '#03a9f4'
@@ -45,10 +49,10 @@ export default async function handler(req, res) {
       // ctx.closePath()
       // ctx.stroke()
 
-      // res.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
-      // res.setHeader('Content-Type', 'image/png');
-      // const pngCanvas = await canvas.encode('png');
-      // return res.end(pngCanvas);
+      res.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
+      res.setHeader('Content-Type', 'image/png');
+      const pngCanvas = await cardCanvas.toBuffer('image/png');
+      return res.status(200).send(pngCanvas);
     } catch (err) {
       console.log(err);
       return res.status(500).json({ success: false, error: 'Failed to make card' });
