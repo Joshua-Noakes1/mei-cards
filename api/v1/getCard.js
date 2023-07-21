@@ -1,5 +1,3 @@
-
-const { platform } = require('os');
 const fs = require('fs');
 const path = require('path');
 const { createCanvas, loadImage, GlobalFonts } = require('@napi-rs/canvas');
@@ -26,10 +24,9 @@ export default async function handler(req, res) {
     }
 
     try {
-      // load fonts if not windows
-      if (platform() !== 'win32') {
-        GlobalFonts.registerFromPath(path.join(__dirname, '../', '../', 'lib', 'hoyo', 'fonts', 'Segoe UI.ttf'), "Segoe UI");
-      }
+      // load fonts
+      GlobalFonts.registerFromPath(path.join(__dirname, '../', '../', 'lib', 'fonts', 'NSB.ttf'), "Noto Sans Bold");
+      GlobalFonts.registerFromPath(path.join(__dirname, '../', '../', 'lib', 'fonts', 'NSR.ttf'), "Noto Sans Regular");
 
       // make canvas
       const cardCanvas = createCanvas(2400, 1200);
@@ -46,17 +43,17 @@ export default async function handler(req, res) {
       cardCTX.fillStyle = '#ffffff';
 
       // draw game name
-      cardCTX.font = 'bold 75px "Segoe UI"';
+      cardCTX.font = '75px "Noto Sans Bold"';
       cardCTX.fillText(gameConfigData.name, 75, 175);
 
       // draw level and uid
-      cardCTX.font = '30px "Segoe UI"';
+      cardCTX.font = '30px "Noto Sans Regular"';
       cardCTX.fillText(`Level ${hoyolabRecordCard.hoyolabRecordCard.level} - UID ${hoyolabRecordCard.hoyolabRecordCard.game_role_id} [${hoyolabRecordCard.hoyolabRecordCard.region_name}]`, 90, 222);
 
       // draw extra data stuff; days active, achievements...
       let extraDataStuffConfig = {
-        titleFont: "bold 50px \"Segoe UI\"",
-        subtitleFont: "30px \"Segoe UI\"",
+        titleFont: "50px \"Noto Sans Bold\"",
+        subtitleFont: "30px \"Noto Sans Regular\"",
         titleHeight: 310,
         subtitleHeight: 360,
         zeroWidth: 75,
