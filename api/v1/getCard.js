@@ -1,10 +1,10 @@
 
-const getRecordCard = require('../../lib/hoyo/getRecordCard');
-const gameConfig = require('../../lib/hoyo/gameConfig.json');
+const { platform } = require('os');
 const fs = require('fs');
 const path = require('path');
-const { createCanvas, loadImage } = require('@napi-rs/canvas');
-
+const { createCanvas, loadImage, GlobalFonts } = require('@napi-rs/canvas');
+const getRecordCard = require('../../lib/hoyo/getRecordCard');
+const gameConfig = require('../../lib/hoyo/gameConfig.json');
 
 export default async function handler(req, res) {
   try {
@@ -24,61 +24,13 @@ export default async function handler(req, res) {
     if (!hoyolabRecordCard.success) {
       return res.status(400).json({ success: false, error: 'Failed to get data from HoYoLab' });
     }
-    // console.log(hoyolabRecordCard);
-
-    // let hoyolabRecordCard = {
-    //   success: true,
-    //   hoyolabRecordCard: {
-    //     has_role: true,
-    //     game_id: 1,
-    //     game_role_id: '206647475',
-    //     nickname: 'Kira',
-    //     region: 'eur01',
-    //     level: 57,
-    //     background_image: 'https://upload-os-bbs.mihoyo.com/game_record/honkai3rd/background.png',
-    //     is_public: true,
-    //     data: [
-    //       {
-    //         "name": "Days on Hyperion",
-    //         "type": 1,
-    //         "value": "62"
-    //       },
-    //       {
-    //         "name": "Stigmata Owned",
-    //         "type": 1,
-    //         "value": "56"
-    //       },
-    //       {
-    //         "name": "Battlesuits Owned",
-    //         "type": 1,
-    //         "value": "28"
-    //       },
-    //       {
-    //         "name": "Outfits",
-    //         "type": 1,
-    //         "value": "31"
-    //       }
-    //     ],
-    //     region_name: 'Europe Server',
-    //     url: 'https://act.hoyolab.com/app/community-game-records-sea/m.html?bbs_presentation_style=fullscreen&bbs_auth_required=true&gid=1&user_id=244675617&utm_source=hoyolab&utm_medium=gamecard',
-    //     data_switches: [
-    //       {
-    //         "switch_id": 1,
-    //         "is_public": true,
-    //         "switch_name": "Show my Battle Chronicle on my profile"
-    //       },
-    //       {
-    //         "switch_id": 2,
-    //         "is_public": true,
-    //         "switch_name": "Show your Character Details in the Battle Chronicle?"
-    //       }
-    //     ],
-    //     h5_data_switches: [],
-    //     background_color: '00C3FF'
-    //   }
-    // }
 
     try {
+      // load fonts if not windows
+      if (platform() !== 'win32') {
+        GlobalFonts.registerFromPath(path.join(__dirname, '../', '../', 'lib', 'hoyo', 'fonts', 'Segoe UI.ttf'), "Segoe UI");
+      }
+
       // make canvas
       const cardCanvas = createCanvas(2400, 1200);
       const cardCTX = cardCanvas.getContext('2d');
@@ -136,7 +88,7 @@ export default async function handler(req, res) {
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[2].name, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["titleHeight"] + 150);
       cardCTX.font = extraDataStuffConfig["subtitleFont"];
       cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[2].value} ${hoyolabRecordCard.hoyolabRecordCard.data[2].name.includes(" ") ? hoyolabRecordCard.hoyolabRecordCard.data[2].name.split(" ")[0] : hoyolabRecordCard.hoyolabRecordCard.data[2].name} Unlocked`, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["subtitleHeight"] + 150);
-      
+
       // outfits, treasures, spiral abyss (hi3, hsr, genshin)
       cardCTX.font = extraDataStuffConfig["titleFont"];
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[3].name, extraDataStuffConfig["oneWidth"], extraDataStuffConfig["titleHeight"] + 150);
