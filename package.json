@@ -1,0 +1,22 @@
+{
+  "name": "mei-cards",
+  "version": "0.0.1",
+  "description": "Game card for HYV games with data from HYLab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Joshua-Noakes1/mei-cards.git"
+  },
+  "author": "Joshua-Noakes1",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Joshua-Noakes1/mei-cards/issues"
+  },
+  "homepage": "https://github.com/Joshua-Noakes1/mei-cards#readme",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.41"
+  }
+}
