@@ -1,8 +1,13 @@
+const getRecordCard = require('../../lib/hoyo/getRecordCard');
 const { createCanvas } = require('@napi-rs/canvas');
+
 
 export default async function handler(request, response) {
   // api/[name].js -> /api/lee
   // request.query.name -> "lee"
+
+  const card = await getRecordCard('hkrpg');
+  console.log(card);
 
   // do canvas stuff
   const canvas = createCanvas(300, 320)
@@ -26,6 +31,7 @@ export default async function handler(request, response) {
   ctx.closePath()
   ctx.stroke()
 
+  response.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
   response.setHeader('Content-Type', 'image/png');
   const pngCanvas = await canvas.encode('png');
   return response.end(pngCanvas);

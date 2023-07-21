@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/Joshua-Noakes1/mei-cards#readme",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.41"
+    "@napi-rs/canvas": "^0.1.41",
+    "dotenv": "^16.3.1",
+    "isomorphic-unfetch": "^4.0.2"
   }
 }
