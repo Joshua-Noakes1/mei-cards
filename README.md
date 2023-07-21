@@ -21,7 +21,7 @@ Use your HoYoLAB data to generate cards with your Genshin Impact, Honkai Impact 
 
 This project has been built around running on Vercel, but with some work it should run on Express or any other Node.js server.
 
-Currently three of HoYoVerses's games are supported: Honkai Impact 3rd, Genshin Impact and Honkai: Star Rail. Each are accessed with the same URL but with a different "game" parameter.
+Currently three of HoYoVerses' games are supported: Honkai Impact 3rd, Genshin Impact and Honkai: Star Rail. Each are accessed with the same URL but with a different "game" parameter.
 
 | Game              | URL                            | Parameter |
 | ----------------- | ------------------------------ | --------- |
@@ -33,7 +33,7 @@ Currently three of HoYoVerses's games are supported: Honkai Impact 3rd, Genshin 
 
 #### 1. Forking the repository
 
-Click the fork button in the top right of the repository page.
+Click the fork button in the top right of the repository page.  
 ![deploy-0.png](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/deploy-0.png)
 
 #### 2. Getting your HoYoLAB cookies
@@ -42,9 +42,9 @@ Click the fork button in the top right of the repository page.
 - Go to your profile page.
 - Open the developer tools (F12 or Ctrl+Shift+I).
 - Go to the "Network" tab.
-- Click on the "Preserve log" / "Persist Logs" button.
+- Click on the "Preserve Log" / "Persist Logs" button.
 - Refresh the page.
-- Click on the GameRecordCard request where the method is "GET" (it should be named "getGameRecordCard" with your HoYoLab UID).
+- Click on the getGameRecordCard request where the method is "GET" (it should be named "getGameRecordCard" with your HoYoLab UID).
 - Go to the "Cookies" tab.
 - Copy the "ltoken" or "ltoken_v2" cookie value.
 - Copy the "ltuid" or "ltuid_v2" cookie value.
