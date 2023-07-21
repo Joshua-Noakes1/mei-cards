@@ -2,40 +2,48 @@ const getRecordCard = require('../../lib/hoyo/getRecordCard');
 const { createCanvas } = require('@napi-rs/canvas');
 
 
-export default async function handler(request, response) {
-  // api/[name].js -> /api/lee
-  // request.query.name -> "lee"
+export default async function handler(req, res) {
+  try {
+    // do card
+    let { game } = req.query;
+    if (!game) {
+      return res.status(400).json({ success: false, error: 'Missing game' });
+    }
 
-  const card = await getRecordCard('hkrpg');
-  console.log(card);
+    let hoyolabRecordCard = await getRecordCard(game);
+    if (!hoyolabRecordCard.success) {
+      return res.status(400).json({ success: false, error: 'Failed to get data from HoYoLab' });
+    }
+    console.log(hoyolabRecordCard);
 
-  // do canvas stuff
-  const canvas = createCanvas(300, 320)
-  const ctx = canvas.getContext('2d')
+    // do canvas stuff
+    const canvas = createCanvas(300, 320)
+    const ctx = canvas.getContext('2d')
 
-  ctx.lineWidth = 10
-  ctx.strokeStyle = '#03a9f4'
-  ctx.fillStyle = '#03a9f4'
+    ctx.lineWidth = 10
+    ctx.strokeStyle = '#03a9f4'
+    ctx.fillStyle = '#03a9f4'
 
-  // Wall
-  ctx.strokeRect(75, 140, 150, 110)
+    // Wall
+    ctx.strokeRect(75, 140, 150, 110)
 
-  // Door
-  ctx.fillRect(130, 190, 40, 60)
+    // Door
+    ctx.fillRect(130, 190, 40, 60)
 
-  // Roof
-  ctx.beginPath()
-  ctx.moveTo(50, 140)
-  ctx.lineTo(150, 60)
-  ctx.lineTo(250, 140)
-  ctx.closePath()
-  ctx.stroke()
+    // Roof
+    ctx.beginPath()
+    ctx.moveTo(50, 140)
+    ctx.lineTo(150, 60)
+    ctx.lineTo(250, 140)
+    ctx.closePath()
+    ctx.stroke()
 
-  response.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
-  response.setHeader('Content-Type', 'image/png');
-  const pngCanvas = await canvas.encode('png');
-  return response.end(pngCanvas);
-
-  const { game } = request.query;
-  return response.end(`Hello ${game}!`);
+    res.setHeader('Cache-Control', 'public, max-age 432000, stale-while-revalidate 86400');
+    res.setHeader('Content-Type', 'image/png');
+    const pngCanvas = await canvas.encode('png');
+    return res.end(pngCanvas);
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({ success: false, error: 'Internal Server Error' });
+  }
 }
