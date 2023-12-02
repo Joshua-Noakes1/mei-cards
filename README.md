@@ -7,15 +7,15 @@ Use your HoYoLAB data to generate cards with your Genshin Impact, Honkai Impact 
 
 ### Honkai Impact 3rd
 
-<span style="display:block;text-align:center">[![Example](https://mei-cards.vercel.app/api/v1/getCard?game=honkai3rd)](https://mei-cards.vercel.app/api/v1/getCard?game=honkai3rd)</span>
+<span style="display:block;text-align:center">[![Example](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-honkai.png)](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-honkai.png)</span>
 
 ### Genshin Impact
 
-<span style="display:block;text-align:center">[![Example](https://mei-cards.vercel.app/api/v1/getCard?game=genshin)](https://mei-cards.vercel.app/api/v1/getCard?game=genshin)</span>
+<span style="display:block;text-align:center">[![Example](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-genshin.png)](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-genshin.png)</span>
 
 ### Honkai: Star Rail
 
-<span style="display:block;text-align:center">[![Example](https://mei-cards.vercel.app/api/v1/getCard?game=starrail)](https://mei-cards.vercel.app/api/v1/getCard?game=starrail)</span>
+<span style="display:block;text-align:center">[![Example](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-starRail.png)](https://raw.githubusercontent.com/Joshua-Noakes1/mei-cards/main/.github/images/card-starRail.png)</span>
 
 ## Usage
 
