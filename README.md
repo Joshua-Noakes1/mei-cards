@@ -30,6 +30,12 @@ Currently three of HoYoVerses' games are supported: Honkai Impact 3rd, Genshin I
 | Honkai: Star Rail | /api/v1/getCard?game=starrail  | starrail  |
 
 ### Deploying
+You can either deploy with the Deploy with Vercel button or you can manually deploy with the steps below.
+
+#### 1. Deploy with Vercel
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FJoshua-Noakes1%2Fmei-cards&env=HOYOLAB_TOKENV2,HOYOLAB_TOKEN,HOYOLAB_ID)
+
+<hr>
 
 #### 1. Forking the repository
 
