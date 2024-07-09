@@ -20,6 +20,7 @@
     "@napi-rs/canvas": "^0.1.41",
     "dotenv": "^16.3.1",
     "isomorphic-unfetch": "^4.0.2",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "user-agents": "^1.1.260"
   }
 }

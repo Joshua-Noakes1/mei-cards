@@ -13,5 +13,10 @@
         "code_name": "starrail",
         "code": "6",
         "name": "Honkai: Star Rail"
+    },
+    {
+        "code_name": "zzz",
+        "code": "8",
+        "name": "Zenless Zone Zero"
     }
 ]

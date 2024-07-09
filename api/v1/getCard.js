@@ -11,12 +11,12 @@ export default async function handler(req, res) {
     if (!game) {
       return res.status(400).json({ success: false, error: 'Missing game' });
     }
-    if (game != 'genshin' && game != 'honkai3rd' && game != 'starrail') {
-      return res.status(400).json({ success: false, error: 'Invalid game' });
-    }
 
     // get game config form name
     let gameConfigData = gameConfig.find((gameConfig) => gameConfig.code_name == game);
+    if (!gameConfigData) {
+      return res.status(400).json({ success: false, error: 'Invalid game' });
+    }
 
     let hoyolabRecordCard = await getRecordCard(gameConfigData.code);
     if (!hoyolabRecordCard.success) {
@@ -48,7 +48,7 @@ export default async function handler(req, res) {
 
       // draw level and uid
       cardCTX.font = '30px "Noto Sans Regular"';
-      cardCTX.fillText(`Level ${hoyolabRecordCard.hoyolabRecordCard.level} - UID ${hoyolabRecordCard.hoyolabRecordCard.game_role_id} [${hoyolabRecordCard.hoyolabRecordCard.region_name}]`, 90, 222);
+      cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.nickname} | Level ${hoyolabRecordCard.hoyolabRecordCard.level} - UID ${hoyolabRecordCard.hoyolabRecordCard.game_role_id} [${hoyolabRecordCard.hoyolabRecordCard.region_name}]`, 75, 222);
 
       // draw extra data stuff; days active, achievements...
       let extraDataStuffConfig = {
@@ -66,27 +66,31 @@ export default async function handler(req, res) {
         case "starrail":
           extraDataStuffConfig["oneWidth"] = 700;
           break;
+        case "zzz":
+          extraDataStuffConfig["oneWidth"] = 700;
+          break
       }
 
-      // days
+      // days (Top Left)
       cardCTX.font = extraDataStuffConfig["titleFont"];
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[0].name, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["titleHeight"]);
       cardCTX.font = extraDataStuffConfig["subtitleFont"];
       cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[0].value} Days`, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["subtitleHeight"]);
 
-      // characters
+      // characters / Inter-Knot (Top Right)
       cardCTX.font = extraDataStuffConfig["titleFont"];
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[1].name, extraDataStuffConfig["oneWidth"], extraDataStuffConfig["titleHeight"]);
       cardCTX.font = extraDataStuffConfig["subtitleFont"];
-      cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[1].value} ${hoyolabRecordCard.hoyolabRecordCard.data[1].name.includes(" ") ? hoyolabRecordCard.hoyolabRecordCard.data[1].name.split(" ")[0] : hoyolabRecordCard.hoyolabRecordCard.data[1].name} Unlocked`, extraDataStuffConfig["oneWidth"], extraDataStuffConfig["subtitleHeight"]);
+      const topRightExtraInfo = `${hoyolabRecordCard.hoyolabRecordCard.data[1].name.includes(" ") ? hoyolabRecordCard.hoyolabRecordCard.data[1].name.split(" ")[0] : hoyolabRecordCard.hoyolabRecordCard.data[1].name} Unlocked`;
+      cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[1].value} ${game !== 'zzz' ? topRightExtraInfo : ''} `, extraDataStuffConfig["oneWidth"], extraDataStuffConfig["subtitleHeight"]);
 
-      // achievements / battlesuits (genshin, hsr have achievements, honkai3rd has battlesuits)
+      // achievements / battlesuits / agents (genshin, hsr have achievements, honkai3rd has battlesuits, zzz has agents) (Bottom Left)
       cardCTX.font = extraDataStuffConfig["titleFont"];
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[2].name, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["titleHeight"] + 150);
       cardCTX.font = extraDataStuffConfig["subtitleFont"];
       cardCTX.fillText(`${hoyolabRecordCard.hoyolabRecordCard.data[2].value} ${hoyolabRecordCard.hoyolabRecordCard.data[2].name.includes(" ") ? hoyolabRecordCard.hoyolabRecordCard.data[2].name.split(" ")[0] : hoyolabRecordCard.hoyolabRecordCard.data[2].name} Unlocked`, extraDataStuffConfig["zeroWidth"], extraDataStuffConfig["subtitleHeight"] + 150);
 
-      // outfits, treasures, spiral abyss (hi3, hsr, genshin)
+      // outfits, treasures, spiral abyss, bangboo (hi3, hsr, genshin, zzz) (Bottom Right)
       cardCTX.font = extraDataStuffConfig["titleFont"];
       cardCTX.fillText(hoyolabRecordCard.hoyolabRecordCard.data[3].name, extraDataStuffConfig["oneWidth"], extraDataStuffConfig["titleHeight"] + 150);
       cardCTX.font = extraDataStuffConfig["subtitleFont"];
