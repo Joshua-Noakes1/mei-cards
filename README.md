@@ -25,7 +25,7 @@ Use your HoYoLAB data to generate cards with your Genshin Impact, Honkai Impact 
 
 This project has been built around running on Vercel, but with some work it should run on Express or any other Node.js server.
 
-Currently three of HoYoVerses' games are supported: Honkai Impact 3rd, Genshin Impact and Honkai: Star Rail. Each are accessed with the same URL but with a different "game" parameter.
+Currently four of HoYoVerses' games are supported: Honkai Impact 3rd, Genshin Impact, Honkai: Star Rail and Zenless Zone Zero. Each are accessed with the same URL but with a different "game" parameter.
 
 | Game              | URL                            | Parameter |
 | ----------------- | ------------------------------ | --------- |
