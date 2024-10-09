@@ -1,7 +1,8 @@
 # mei-cards
 
-Use your HoYoLAB data to generate cards with your Genshin Impact, Honkai Impact 3rd, Honkai: Star Rail and Zenless Zone Zero stats!  
-<small>This project is not affiliated with miHoYo, they could decide to ban you for using it. [[2.3.vii HoYoVerse Account - Terms of Service](https://account.hoyoverse.com/?lang=en-us&bbs_theme=dark&bbs_theme_device=1#/about/userAgreement)]</small>
+Use your HoYoLAB data to generate cards with your Genshin Impact, Honkai Impact 3rd, Honkai: Star Rail and Zenless Zone Zero stats! 
+> [!WARNING]  
+> This project is not affiliated with miHoYo / HoYoVerse, they could decide to ban you for using it. [[2.3.vii HoYoVerse Account - Terms of Service](https://account.hoyoverse.com/?lang=en-us&bbs_theme=dark&bbs_theme_device=1#/about/userAgreement)]
 
 ## Examples
 
